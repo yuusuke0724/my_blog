@@ -1,6 +1,9 @@
 class PostsController < ApplicationController
   def index
+   # 記事一覧用
     @posts = Post.all
+    # 最新記事用
+    @new_posts = Post.all
     
   end
  
@@ -39,6 +42,8 @@ class PostsController < ApplicationController
     @post.destroy
     redirect_to posts_path, notice: "ブログを削除しました。"
   end
+
+
 
 private
 
