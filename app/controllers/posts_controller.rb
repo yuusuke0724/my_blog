@@ -1,12 +1,12 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
+
   def index
-   # 記事一覧用
-    @posts = Post.all
-    # 最新記事用
-    @new_posts = Post.all
+    @posts = Post.all.order(created_at: :desc)
+    @new_posts = Post.all.order(created_at: :desc).limit(5)
     
   end
- 
+    
   def new
     @post = Post.new
   end
@@ -21,15 +21,15 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+
   end
 
   def edit
-    @post = Post.find(params[:id])
+
   end
 
   def update
-    @post = Post.find(params[:id])
+
     if @post.update(post_params)
       redirect_to @post, notice: "ブログを更新しました。"
     else
@@ -38,7 +38,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
+
     @post.destroy
     redirect_to posts_path, notice: "ブログを削除しました。"
   end
@@ -51,5 +51,8 @@ def post_params
     params.require(:post).permit(:title, :body, :category)
 end
 
+def set_post
+  @post = Post.find(params[:id])
+end
 
 end
